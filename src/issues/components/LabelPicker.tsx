@@ -1,12 +1,35 @@
+import { LoadingSpinner } from "../../shared/components/loading-spinner";
+import { useLabel } from "../hooks/useLabels";
+
 export const LabelPicker = () => {
+  const { labelsQuery } = useLabel()
+
+
+  if (labelsQuery.isLoading) {
+    return <div className="flex justify-center items-center h-52">
+      <LoadingSpinner />
+    </div>
+  }
+
+
+  if (labelsQuery.data == null) {
+    return <div>Error</div>
+  }
+
+
   return (
-    <>
-      <span
-        className="px-2 py-1 rounded-full text-xs font-semibold hover:bg-slate-800 cursor-pointer"
-        style={{ border: `1px solid #ffccd3`, color: '#ffccd3' }}
-      >
-        Primary
-      </span>
-    </>
+    <div className="flex flex-wrap gap-2 justify-center">
+      {
+        labelsQuery.data.map((label) => (
+          <span key={label.id}
+            className=" animate-bounce px-2 py-1 rounded-full text-xs font-semibold hover:bg-slate-800 cursor-pointer text-white"
+            style={{ border: `1px solid #${label.color}` }}
+          >
+            {label.name}
+          </span>
+
+        ))
+      }
+    </div>
   );
 };

@@ -9,6 +9,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -57,4 +58,19 @@ pre {
 
 .active {
   @apply bg-blue-700 border-blue-500 border-0;
+}
+
+@theme {
+  --fadeIn: fadeIn .2s ease-in-out;
+
+  @keyframes fade-in-scale {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
 }
