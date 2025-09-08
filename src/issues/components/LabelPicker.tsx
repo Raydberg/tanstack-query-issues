@@ -1,7 +1,13 @@
 import { LoadingSpinner } from "../../shared/components/loading-spinner";
 import { useLabel } from "../hooks/useLabels";
 
-export const LabelPicker = () => {
+
+interface Props {
+  onLabelSelected: (label: string) => void
+  selectedLabels: string[]
+}
+
+export const LabelPicker = ({ onLabelSelected, selectedLabels }: Props) => {
   const { labelsQuery } = useLabel()
 
 
@@ -22,7 +28,8 @@ export const LabelPicker = () => {
       {
         labelsQuery.data.map((label) => (
           <span key={label.id}
-            className=" animate-bounce px-2 py-1 rounded-full text-xs font-semibold hover:bg-slate-800 cursor-pointer text-white"
+            onClick={() => onLabelSelected(label.name)}
+            className={`animate-bounce px-2 py-1 rounded-full text-xs font-semibold hover:bg-slate-800 cursor-pointer text-white ${selectedLabels.includes(label.name) ? 'selected-label' : ''} `}
             style={{ border: `1px solid #${label.color}` }}
           >
             {label.name}
@@ -30,6 +37,6 @@ export const LabelPicker = () => {
 
         ))
       }
-    </div>
+    </div >
   );
 };
